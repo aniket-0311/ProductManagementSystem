@@ -1,0 +1,218 @@
+﻿@model List<ProductManagementSystem_Assign2.Models.DomainModel.ProductModel>;
+@{
+}
+
+<style>
+    card {
+        border-radius: 2px
+    }
+
+    .card-img-top {
+        height: 200px;
+    }
+
+    .card-img-top-modal {
+        width: 100%;
+        height: 300px;
+    }
+
+    .containerCard {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 40px 0px 100px 50px;
+        flex-wrap: wrap;
+    }
+
+
+    #card {
+        background: rgb(245, 245, 245,0.7);
+        width: 350px;
+        /*max-height: 200px;*/
+        box-shadow: 4px 4px 8px 0 rgba(0,0,0,0.2);
+        border-radius: 20px;
+        transition: 0.3s;
+        margin-right: 60px;
+        margin-bottom: 80px;
+    }
+
+    #card:hover 
+    {
+         transition: 0.3s;
+         box-shadow: 8px 8px 16px 0 rgba(0,0,0,0.2),-8px -8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    #card img 
+    {
+            /*object-fit: cover;*/
+            animation: fadeIn 1s;
+            height: 250px;
+            width: 100%;
+            border-radius: 20px 20px 0px 0px;
+            transition: 0.3s;
+    }
+
+    .checked {
+        color: orange;
+    }
+
+    #rater {
+        margin-top: .8rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        justify-items: center;
+    }
+
+    #content {
+        padding: 2vh 1vw 2vh 2vw;
+        font-size: 1.3rem;
+        font-family: Arial;
+        color: #345e82;
+    }
+
+
+        #content ol {
+            padding: 2vh 1vw 3vh 1vw;
+            font-size: 1rem;
+            color: black;
+            font-weight: 700;
+            /*   transition:0.3s; */
+        }
+
+            #content ol li {
+                display: block;
+                transition: 0.3s;
+                list-style-type: 123;
+                width: auto;
+            }
+
+                #content ol li:hover {
+                    display: block;
+                    transition: 0.3s;
+                    color: #345e82;
+                    padding-left: 2vh;
+                    cursor: pointer;
+                }
+
+    #price {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        #price button {
+            margin-bottom: 20px;
+            height: 40px;
+            width: 80px;
+            font-size: 2.8vh;
+            font-family: Arial;
+            font-weight: Regular;
+            background-color: #345e82;
+            border: none;
+            outline: none;
+            color: white;
+            border-radius: 10px;
+            transition: 0.3s
+        }
+
+            #price button:active {
+                background-color: white;
+                color: #345e82
+            }
+
+            #price button:hover {
+                transition: 0.3s;
+                margin-left: 2vw;
+                margin-right: 2vw;
+                transform: scale(1.3);
+                cursor: pointer
+            }
+
+</style>
+
+<h3 class="text-center">Products List</h3>
+
+@if (Model != null && Model.Any())
+{
+    <div class="containerCard">
+        @foreach (var item in Model)
+        {
+            <div id="card">
+                <img src=@item.ImageUrl alt="">
+                <div id="content">
+                    @item.Name
+                    <ol>
+                        <li>Category: @item.Category</li>
+                        <li>Price: $@item.Price</li>
+                        <li id="rater">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        </li>
+                    </ol>
+                    <div id="price">
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal-@item.Id"> View</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <!-- Modal -->
+    @foreach (var item in Model)
+    {
+        <div class="modal fade " id="exampleModal-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+
+                        <div class="img-div">
+                            <img class="card-img-top-modal" src=@item.ImageUrl alt="Image">
+                        </div>
+                        <div id="content">
+                            <p style="font-size:33px;text-align:center">@item.Name</p>
+                            <ol style="display:flex; justify-content:space-around; gap:200px;">
+                                <li class="aa">Category: @item.Category</li>
+                                <li class="aa">Price: $@item.Price</li>
+                            </ol>
+                            <li id="rater" style="    grid-template-columns: 11px 52px 11px 50px 11px;">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                            </li>
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-dark"
+                               asp-action="Edit"
+                               asp-controller="Product"
+                               asp-route-id="@item.Id">
+                                Edit
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="text-center">No Products Found!</p>
+}
+
+
+@section scripts {
+    @await Html.PartialAsync("_NotificationScript")
+}

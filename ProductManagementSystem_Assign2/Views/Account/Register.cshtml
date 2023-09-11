@@ -1,0 +1,43 @@
+﻿@model ProductManagementSystem_Assign2.Models.ViewModel.RegisterViewModel;
+@{
+    Layout = "_CustomLayout";
+    
+}
+
+
+<partial name="_SharedStyles" />
+<div class="background">
+
+    <div class="card">
+        <form method="post">
+            <h2 class="title"> REGISTER</h2>
+            <p class="subtitle">Have an account? <a href="Login">Login</a></p>
+
+            @*<p class="or"><span>or</span></p>*@
+
+            <div class="email-login">
+
+                <label for="username"> <b>Username</b></label>
+                <input type="text" placeholder="Enter Username" asp-for="Username" required>
+                <span class="text-danger" asp-validation-for="Username"></span>
+
+                <label for="email"> <b>Email</b></label>
+                <input type="text" placeholder="Enter Email" asp-for="Email" required>
+                <span class="text-danger" asp-validation-for="Email"></span>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" asp-for="Password" required>
+                <span class="text-danger" asp-validation-for="Password"></span>
+
+            </div>
+            <button class="cta-btn">Register</button>
+            @*<a class="forget-pass" href="#">Forgot password?</a>*@
+        </form>
+    </div>
+
+
+</div>
+
+@section scripts {
+    @await Html.PartialAsync("_NotificationScript")
+}

@@ -1,0 +1,55 @@
+﻿.header {
+    z-index: 100;
+    position: fixed;
+    height: 60px;
+    width: 100%;
+}
+
+.nav-link {
+    margin: 0 20px;
+    transition: 0.2s;
+}
+.nav-item::after {
+    content: '';
+    display: block;
+    width: 0px;
+    border-bottom: 2px solid #fec400;
+    transition: 0.4s
+}
+
+.nav-item:hover::after {
+    width: 100%
+}
+
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .show > .nav-link,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #fec400
+}
+
+/* Notification CSS */
+.notification-container {
+    position: fixed;
+    top: 64px;
+    right: 38px;
+    z-index: 1000;
+}
+
+.notification {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.notification-success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.notification-failure {
+    background-color: red;
+    color: white;
+}

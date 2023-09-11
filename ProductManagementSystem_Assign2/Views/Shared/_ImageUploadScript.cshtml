@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<script>
+    const featuredUploadElement = document.getElementById('featuredImageUpload');
+    const featuredImageElement = document.getElementById('featuredImageUrl');
+    const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+
+    async function uploadFeaturedImage(e) {
+        console.log("aa", e.target.files[0]);
+
+        let data = new FormData();
+        data.append('file', e.target.files[0]);
+
+        await fetch('/api/image', {
+            method: 'POST',
+            headers: {
+                'Accept': '*/*'
+            },
+            body: data
+        }).then(response => response.json())
+            .then(result => {
+                console.log(result)
+                featuredImageUrl.value = result.link;
+                featuredImageDisplayElement.src = result.link;
+                featuredImageDisplayElement.style.display = 'block';
+            })
+    }
+    featuredUploadElement.addEventListener('change', uploadFeaturedImage);
+
+</script>

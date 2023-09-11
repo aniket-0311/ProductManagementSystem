@@ -1,0 +1,42 @@
+﻿@model ProductManagementSystem_Assign2.Models.ViewModel.LoginViewModel;
+@{
+    Layout = "_CustomLayout";
+    
+}
+
+
+<body>
+    <partial name="_SharedStyles" />
+    <div class="background">
+
+        <div class="card">
+            <form method="post">
+                <h2 class="title"> Log in</h2>
+                <p class="subtitle">Don't have an account? <a href="Register">Sign Up</a></p>
+
+                @*<p class="or"><span>or</span></p>*@
+
+                <div class="email-login">
+
+                    <label for="email"> <b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" asp-for="Username" required>
+                    <span class="text-danger" asp-validation-for="Username"></span>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" asp-for="Password" required>
+                    <span class="text-danger" asp-validation-for="Password"></span>
+
+                </div>
+                <button class="cta-btn">Log In</button>
+                @*<a class="forget-pass" href="#">Forgot password?</a>*@
+            </form>
+        </div>
+
+
+    </div>
+
+</body>
+
+@section scripts {
+    @await Html.PartialAsync("_NotificationScript")
+}

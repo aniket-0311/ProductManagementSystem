@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const notificationContainer = document.getElementById("notification-container");
+        const notificationType = '@(TempData["NotificationType"] ?? "")';
+        const notificationText = '@(TempData["Notification"] ?? "")';
+
+        if (notificationType === "success" || (notificationType === "failure" && notificationText)) {
+            const notification = document.createElement("div");
+            notification.className = `notification notification-${notificationType}`;
+            notification.textContent = notificationText;
+            notificationContainer.appendChild(notification);
+
+            setTimeout(function () {
+                notification.remove();
+            }, 3000); // Remove notification after 3 seconds
+        }
+    });
+</script>
+
